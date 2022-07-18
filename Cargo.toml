@@ -1,0 +1,13 @@
+[package]
+name = "lyoko_frames"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+warp = "0.3"
+serde = "1.0"
+tokio = {version = "1", features = ["macros", "rt-multi-thread"]}
+anyhow = "1.0"
+rand = "0.8"
