@@ -14,13 +14,18 @@ use rand::seq::SliceRandom;
 use crate::episode::EpisodeNumber;
 
 const API_ADDRESS: Ipv4Addr = Ipv4Addr::new(127, 0, 0, 1);
+const API_PORT: u16 = 8080;
 
 #[tokio::main]
 async fn main() -> Result<()> {
+    println!("Generating random episodes order...");
     let episodes_order = EpisodeNumber::generate_episodes_order();
 
+    println!("Loading web pages content in RAM...");
     let index_page = Arc::new(read_index_page()?);
     let game_page = Arc::new(read_game_page()?);
+
+    println!("Loading routes...");
 
     let index = warp::get().and(warp::path("index.html")).map(move || {
         let index_page = Arc::clone(&index_page);
@@ -42,8 +47,9 @@ async fn main() -> Result<()> {
 
     let server = warp::serve(routes);
 
+    println!("Server is listening on {}:{}", API_ADDRESS, API_PORT);
     server
-        .run(SocketAddr::new(IpAddr::V4(API_ADDRESS), 8080))
+        .run(SocketAddr::new(IpAddr::V4(API_ADDRESS), API_PORT))
         .await;
 
     Ok(())
