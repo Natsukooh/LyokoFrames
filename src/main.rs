@@ -1,6 +1,7 @@
 mod episode;
 mod frame;
 mod util;
+mod date;
 
 use std::collections::HashMap;
 use std::fs;
